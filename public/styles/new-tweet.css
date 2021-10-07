@@ -1,0 +1,28 @@
+#new-tweet {
+  display: flex;
+  flex-direction: column; 
+  width: 90%;
+}
+
+#tweet-text {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid black;
+  border-width: thick;
+  background: transparent;
+  resize:none;
+}
+
+
+footer {
+  padding-top: 0.5em;
+  display:flex;
+  justify-content: space-between;
+  font-family: Bungee;
+}
+
+button {  
+  color: aliceblue;
+  background-color: cornflowerblue;
+}
+
