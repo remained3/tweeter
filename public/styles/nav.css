@@ -7,18 +7,18 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  position: sticky;
 }
 
 .nav-logo {
   font-family: "Bungee"; 
   font-size: xx-large;
-  padding-bottom: 0.75em;
+  padding-bottom: 0.5em;
 }
 
 .nav-text {
   display: flex;
   flex-direction: column;
-  padding-bottom: 0.75em;
+  padding-bottom: 0.5em;
   align-items: center;
-
 }
