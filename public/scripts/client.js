@@ -71,6 +71,7 @@ $(function() {
     }
   };
 
+  //checks if tweets contain the right amount of data and posts them
   const $submitNewTweet = $("#new-tweet");
   $submitNewTweet.on("submit", function(event) {
     event.preventDefault();
