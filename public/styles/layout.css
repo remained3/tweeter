@@ -29,4 +29,26 @@ body {
 main {
   width: 90%;
   background-color: #f4f1ec;
+  margin: 1em;
+  align-items: center;
+}
+
+@media screen and (min-width:1024px) {
+
+  .below-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin: 1em;
+  }
+
+  header {
+    width: 25vw;
+    height: 25vw;
+  }
+
+  main.container {
+    width: 60vw;
+  }
 }

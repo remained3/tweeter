@@ -1,83 +1,89 @@
-$(() => {
+/*
+ * Client-side JS logic goes here
+ * jQuery is already loaded
+ * Reminder: Use (and do all your DOM work in) jQuery's document ready function
+ */
+$(function() {
 
-  const fetchTweets = () => {
 
-    $.ajax({
-      url: '/tweets',
-      method: 'GET',
-      dataType: 'json',
-      success: (tweets) => {
-        console.log("tweet", tweets)
-        createTweets(tweets);
-  
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
-  }
+  //hide the error message until needed
+  const $errorMsg = $(".tweet-error");
+  $errorMsg.hide();
 
-  fetchTweets();
+  const escape = function(str) {
+    let div = document.createElement("div");
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  };
 
-  // create single blog post node
-  const createTweetElement = function (tweetData) {
-    const $tweet = `<article class="tweets-container">
-  <div class="tweet">
-    <div class="tweet-header">
-      <img src="${tweetData.user.avatars}" class="tweeter-icon" />
-      <p class="tweeter-name">${tweetData.user.name}</p>
-      <p class="handle">${tweetData.user.handle}</p>
-    </div>
-    <h2 class="tweet1">
-     <p>${(escape(tweetData.content.text)).replace(/%20/g, "G").replace("%3F", "?").replace("%21", "!").replace(/%2C/g,"2")}</p>
-    </h2>
-    <div class="tweet-footer">
-    <p class="days-ago">${timeago.format(tweetData.created_at)}</p>
-      <p class="small-icons">
-        <i class="fa fa-flag"></i> 
-        <i class="fa fa-retweet"></i>
-        <i class="fa fa-heart"></i>
-      </p>
-    </div>
-  </div>
-</article>`;
-
+  const createTweetElement = function(tweetCont) {
+    let $tweet = $(`
+    <article class="tweet">
+      <header>
+        <span>
+          <img src=${tweetCont.user.avatars}>
+          <span>${tweetCont.user.name}</span>
+        </span>
+        <span class="user-handle" >${tweetCont.user.handle}</span>
+      </header>
+      <p>${escape(tweetCont.content.text)}</p>
+      <footer>
+        <span>${timeago.format(tweetCont.created_at)}</span>
+        <span>
+          <i class="fas fa-flag"></i>
+          <i class="fas fa-retweet"></i>
+          <i class="fas fa-heart"></i>
+        </span>
+      </footer>
+    </article>
+    `);
     return $tweet;
   };
 
-  const createTweets = (tweets) => {
-    const $tweetsContainer = $('.tweets-container');
+
+  //show previously made tweets with newest at the top
+  const showTweets = function(tweets) {
+    const $tweetsContainer = $("#tweets-container");
     $tweetsContainer.empty();
 
-    for(const tweet of tweets) {
-      const $tweet = createTweets(tweet);
-      $tweetsContainer.prepend($tweet)
+    for (const tweet of tweets) {
+      const $tweet = createTweetElement(tweet);
+      $tweetsContainer.prepend($tweet);
     }
-  }  
-  
-  const $newTweetSubmit = $('#new-tweet');
-  $newTweetSubmit.on('submit', function(event) {
+  };
+
+  const loadTweets = function() {
+    $.get("/tweets/", function(data) {
+      showTweets(data);
+    });
+  };
+
+  const $submitNewTweet = $("#new-tweet");
+  $submitNewTweet.on("submit", function(event) {
     event.preventDefault();
-    let tweetLength = $("#tweet-text").val();
-    if (!tweetLength) {
-      return alert ("Please write something to submit a tweet!")
-    }
-    if (tweetLength > 140) {
-      return alert ("Please use less than 140 characters :)")
-    }
+    $errorMsg.slideUp(100);
     
-    const serializedData = $(this).serialize() 
-    $.post('/tweets', serializedData, () => {
-      getTweets();
-    })
+    const $charCounter = $("#char-counter").val();
+    if ($charCounter > 139) {
+      $errorMsg.children("span").text("Error: You need to say something to post a message!");
+      $errorMsg.slideDown(100);
+      return;
+    } else if ($charCounter < 0) {
+      $errorMsg.children("span").text("Error: Please limit yourself to 140 characters!");
+      $errorMsg.slideDown(100);
+      return;
+    }
+    const serializedData = $(this).serialize();
+    
+    $.post("/tweets/", serializedData, () => {
+      loadTweets();
+      $("#tweet-text").val("");
+      $("#char-counter").text("140");
+    });
 
-  })
+  });
 
+  //loads the inital tweets onto the page
+  loadTweets();
 
-
-})
-
-
-
-
-
+});

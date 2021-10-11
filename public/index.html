@@ -3,24 +3,27 @@
   <head>
     <!-- Meta Information -->
     <title>Tweeter - Home Page</title>
+    <meta name='viewport' content='width=device-width, inital-scale=1.0, maximum-scale=1.0' />
 
     <!-- External CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" type="text/css" />
 
-    
-    <!--Fonts-->
+    <!-- Fonts from Google Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Source+Sans+Pro:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Source+Sans+Pro:ital,wght@0,300;0,600;1,200;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <!-- timeago Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/4.0.2/timeago.min.js" integrity="sha512-SVDh1zH5N9ChofSlNAK43lcNS7lWze6DTVx1JCXH1Tmno+0/1jMpdbR8YDgDUfcUrPp1xyE53G42GFrcM0CMVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- App CSS -->
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
     <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
     <link rel="stylesheet" href="/styles/header.css" type="text/css" />
     <link rel="stylesheet" href="/styles/new-tweet.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/old-tweets.css" type="text/css" /> 
+    <link rel="stylesheet" href="/styles/old-tweets.css" type="text/css" />
+
     <!-- External JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
@@ -29,43 +32,48 @@
     <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
   </head>
 
+
   <body>
-    <!-- Top nav bar (fixed) -->
-    <nav class="nav">    
-      <span class="nav-logo">tweeter</span>
-      <span class="nav-text">
+    <!--Navigation bar-->
+    <nav class="navbar">
+      <span class="logo">tweeter</span>
+      <span class="message">
         <span><strong>Write</strong> a new tweet</span>
         <span><i class="fas fa-angle-double-down"></i></span>
       </span>
     </nav>
- 
-     </nav>
+    <section class="below-nav">
+      <header>
+        <div>
+          <img src="/images/profile-hex.png">
+        </div>
+        <br>
+        <div>
+          <h2>Awesome User</h2>
+        </div>
+      </header>
 
-    <header>
-      <div>
-          <img src="/images/profile-hex.png"> 
-      </div>
-      <br>
-      <div>
-          <h2>Your Name</h2>
-      </div>
-  </header>
+      <!-- Page-specific (main) content here -->
+      <main class="container">
+        <section class="new-tweet">
+          <h2>Compose Tweet</h2>
+          <form id="new-tweet">
+            <label for="tweet-text">What are you humming about?</label>
+            <textarea name="text" id="tweet-text"></textarea>
+            <p class="tweet-error">
+              <i class="fas fa-exclamation-circle"></i>
+              <span>Error Message</span>
+            </p>
+            <footer>
+              <button class="submit-tweet" type="submit">Tweet</button>
+              <output name="counter" id="char-counter" class="counter" for="tweet-text">140</output>
+            </footer>
+          </form>
+        </section>
+        <section id="tweets-container">
 
-    <!-- Page-specific (main) content here -->
-    <main class="container">
-      <section class="new-tweet">
-        <h2>Compose Tweet</h2>
-        <form id="new-tweet">
-          <textarea name="text" id="tweet-text" placeholder="What are you humming about?"></textarea>
-          <footer>
-            <button type="submit">Tweet</button>
-            <output name="counter" id="char-counter" class="counter" for="tweet-text">140</output>
-          </footer>
-        </form>
-      </section>
-    <section class="tweets-container">
-      <!--Display previous tweets-->
+        </section>
+      </main>
     </section>
-    </main>
   </body>
 </html>
