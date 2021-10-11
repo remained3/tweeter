@@ -71,10 +71,6 @@ $(function() {
     }
   };
 
-
-
-
-  loadTweets();
   const $submitNewTweet = $("#new-tweet");
   $submitNewTweet.on("submit", function(event) {
     event.preventDefault();
@@ -99,8 +95,5 @@ $(function() {
     });
 
   });
-
-  //loads the inital tweets onto the page
-  loadTweets();
 
 });
