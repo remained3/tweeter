@@ -16,6 +16,25 @@ $(function() {
     return div.innerHTML;
   };
 
+    // load the previous tweets
+    const loadTweets = () => {
+      $.ajax({
+        url: "/tweets",
+        method: "GET",
+        dataType: "json",
+        success: (data) => {
+          showTweets(data);
+    
+        },
+        error: (err) => {
+          console.log(`there was an error: ${err}`);
+        }
+      });
+    };
+    loadTweets();
+
+
+  //all the elements of a single previous tweet
   const createTweetElement = function(tweetCont) {
     let $tweet = $(`
     <article class="tweet">
@@ -52,12 +71,10 @@ $(function() {
     }
   };
 
-  const loadTweets = function() {
-    $.get("/tweets/", function(data) {
-      showTweets(data);
-    });
-  };
 
+
+
+  loadTweets();
   const $submitNewTweet = $("#new-tweet");
   $submitNewTweet.on("submit", function(event) {
     event.preventDefault();
